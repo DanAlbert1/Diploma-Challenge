@@ -1,7 +1,3 @@
-USE DiplomaChallengeSem1;
---USE challenge;
-
-
 DROP VIEW IF EXISTS view_TREATMENT;
 DROP VIEW IF EXISTS view_PROCEDURE;
 DROP TABLE IF EXISTS ProcedureSelection;
