@@ -22,7 +22,7 @@ namespace API.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(configuration["DBLaptop"]);
+            optionsBuilder.UseSqlServer(configuration["DB"]);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
