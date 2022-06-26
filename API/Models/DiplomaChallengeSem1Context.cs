@@ -7,8 +7,10 @@ namespace API.Models
 {
     public class DiplomaChallengeSem1Context : DbContext
     {
-        public DiplomaChallengeSem1Context()
+        private IConfiguration configuration;
+        public DiplomaChallengeSem1Context(IConfiguration _configuration)
         {
+            configuration = _configuration;
         }
 
         public virtual DbSet<Owner> OWNER { get; set; } = null!;
@@ -20,7 +22,7 @@ namespace API.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-CQVULK8;Initial Catalog=DiplomaChallengeSem1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer(configuration["DBLaptop"]);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
