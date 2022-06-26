@@ -1,0 +1,23 @@
+<form class="sign-up-box center" [formGroup]="AddPetForm">
+    <mat-form-field appearance="outline">
+    <mat-label>Pet Name</mat-label>
+    <input
+    formControlName="PetName"
+    type="text"
+    matInput
+    placeholder="e.g Lucky"
+    >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+    <mat-label>Type</mat-label>
+    <input
+    formControlName="Type"
+    type="text"
+    placeholder="e.g Dog"
+    matInput
+    >
+    </mat-form-field>
+      <p style="color: red;">{{error.message}}</p>
+      <button (click)="createPet()" mat-raised-button color="primary">Add Pet</button>
+</form>
+

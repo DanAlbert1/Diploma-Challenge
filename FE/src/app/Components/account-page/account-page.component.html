@@ -1,0 +1,34 @@
+<form [formGroup]="ownerForm" novalidate (ngSubmit)="onSubmit()">
+  <div class="form-container">
+
+    <mat-form-field placeholder="Owner Id">
+        <label><strong>Owner Id:</strong></label>
+        <input matInput formControlName="ownerId">
+      </mat-form-field>
+
+
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="First name" formControlName="firstName">
+      <mat-error *ngIf="ownerForm.controls['firstName'].hasError('required')">
+        First name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Last name" formControlName="surname">
+      <mat-error *ngIf="ownerForm.controls['surname'].hasError('required')">
+        Last name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="phone" formControlName="phone">
+      <mat-error *ngIf="ownerForm.controls['phone'].hasError('required')">
+        Phone is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Edit</button>
+  </div>
+</form>

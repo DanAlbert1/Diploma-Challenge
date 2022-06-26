@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Pets App</span>
+    <span class="spacer-right"></span>
+    <ng-container *ngIf="IsLoggedIn">
+      <button class="nav-button" mat-raised-button routerLink="/pets" routerLinkActive="active" color="primary">My Pets</button>
+      <button class="nav-button" mat-raised-button routerLink="/treatment" routerLinkActive="active" color="primary">Treatments</button>
+      <button class="nav-button" mat-raised-button routerLink="/account" routerLinkActive="active" color="primary">Account</button>
+      <button
+
+      style="margin-left:auto;"
+       mat-mini-fab color="primary"
+       aria-label="Example icon button with a filter list icon"
+       (click)="logout()"
+       >
+        <mat-icon>logout</mat-icon>
+      </button>
+    </ng-container>
+  </mat-toolbar-row>
+</mat-toolbar>

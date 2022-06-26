@@ -1,0 +1,33 @@
+<form class="sign-up-box" [formGroup]="createTreatmentForm">
+  <div class="form-container">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input type="date" formControlName="Date" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Notes</mat-label>
+      <input formControlName="Notes" matInput>
+    </mat-form-field>
+  </div>
+    <div class="form-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Pet</mat-label>
+          <mat-select formControlName="Pet">
+            <mat-option *ngFor="let item of pets" value="{{item.id}}">{{item.petName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Procedure</mat-label>
+          <mat-select formControlName="Procedure">
+            <mat-option *ngFor="let item of procedures" value="{{item.id}}">{{item.description}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="center">
+        <button (click)="CreateTreatment()" mat-raised-button color="primary">Add Treatment</button>
+      </div>
+</form>

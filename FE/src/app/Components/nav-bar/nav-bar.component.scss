@@ -1,0 +1,14 @@
+.nav-button{
+  margin-right: 10px;
+
+  transition: all ease 0.5s;
+
+  &:hover{
+    background-color:darkblue;
+  }
+
+}
+
+.active{
+  background-color: darkblue;
+}

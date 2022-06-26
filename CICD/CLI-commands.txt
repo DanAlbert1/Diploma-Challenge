@@ -1,0 +1,11 @@
+cd Diploma-Challenge-Sem1\CICD
+
+The command below will create a sql server and database
+
+Main Site Branch Resources
+
+az deployment group create --name db-deploy --resource-group challenge-sem-1 --template-file challenge-db-deploy.json
+
+az deployment group create --name api-deploy --resource-group challenge-sem-1 --template-file challenge-api-deploy.json
+
+az deployment group create --name fe-deploy --resource-group challenge-sem-1 --template-file challenge-fe-deploy.json
