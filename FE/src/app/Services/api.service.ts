@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
+
+import { concatMap, tap, pluck } from 'rxjs/operators';
+
+// Import the HttpClient for making API requests
 import { HttpClient } from '@angular/common/http';
+
+// Import AuthService from the Auth0 Angular SDK to get access to the user
+import { AuthService } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,44 +16,53 @@ import { environment } from 'src/environments/environment';
 export class ApiService {
 
   constructor(
+    public auth: AuthService,
     private http: HttpClient
   ) { }
 
-  register = (owner:any) => {
-    return this.http.post(`${environment.apiURL}/owner/register`,owner)
+
+  checkRole = () => {
+    return this.http.get(`${environment.apiURL}/api/staff/check-role`)
   }
 
-  login = (phone:any) => {
-    console.log(phone)
-    return this.http.post(`${environment.apiURL}/owner/login`, phone )
+  signUp = (signUpReq: any) => {
+    return this.http.post(`${environment.apiURL}/api/owner/sign-up`, signUpReq)
   }
 
-  updateUser = (ownerId: any, owner:any) => {
-    return this.http.put(`${environment.apiURL}/owner/update-owner/${ownerId}`, owner)
+  getPets = () => {
+    return this.http.get(`${environment.apiURL}/api/owner/view-pets`)
   }
 
-  getPets = (userID: number) => {
-    return this.http.get(`${environment.apiURL}/owner/get-pets/${userID}`)
+  adminGetPets = () => {
+    return this.http.get(`${environment.apiURL}/api/staff/view-pets`)
   }
 
-  createPets = (userID: number, pet:any) => {
-    return this.http.post(`${environment.apiURL}/owner/${userID}/add-pet`,pet)
+
+  viewTreatments = () => {
+    return this.http.get(`${environment.apiURL}/api/owner/view-treatments`)
   }
 
-  viewTreatments = (userID: number) => {
-    return this.http.get(`${environment.apiURL}/owner/${userID}/view-treatments`)
+  adminViewTreatments = () => {
+    return this.http.get(`${environment.apiURL}/api/staff/view-treatments`)
   }
 
   getProcedures = () => {
-    return this.http.get(`${environment.apiURL}/Owner/get-procedures`)
+    return this.http.get(`${environment.apiURL}/api/owner/procedures`)
   }
 
-  addTreatment = (treatment:any) => {
-    return this.http.post(`${environment.apiURL}/Owner/add-treatment`, treatment)
+  createTreatment = (treatment:any) => {
+    return this.http.post(`${environment.apiURL}/api/owner/create-treatment`, treatment)
   }
 
-  getOwner = (userId:any) => {
-    return this.http.get(`${environment.apiURL}/Owner/get-owner/${userId}`)
+  updateOwner = (owner:any) => {
+    return this.http.post(`${environment.apiURL}/api/owner/update-owner`, owner)
   }
 
+  getOwner = () => {
+    return this.http.get(`${environment.apiURL}/api/owner/get-user`)
+  }
+
+  markTreatmentAsPaid = (treatmentID:number) => {
+    return this.http.put(`${environment.apiURL}/api/staff/${treatmentID}/treatment-paid`,{})
+  }
 }

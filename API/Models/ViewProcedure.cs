@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
 
-namespace API.Models
+namespace API.models
 {
-    public partial class ViewProcedure
+    public class ProcedureView
     {
-        public int? OwnerId { get; set; }
+        public ProcedureView(){
+
+        }
+
+        public int OwnerId { get; set; }
+
         public string? PetName { get; set; }
-        public DateTime? Date { get; set; }
-        public int ProcedureId { get; set; }
-        public string? Description { get; set; }
-        public decimal? Price { get; set; }
+
+        public DateTime Date { get; set; }
+        public int ProcedureID { get; set; }
+        
+        public string? Description { get; set; }        
+        public Decimal Price { get; set; }        
     }
 }

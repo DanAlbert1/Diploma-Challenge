@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router, Event, NavigationStart, NavigationEnd, NavigationError, ActivatedRoute } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+
+import { AuthService } from '@auth0/auth0-angular';
+import { ApiService } from 'src/app/Services/api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,34 +11,40 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-  IsLoggedIn: boolean = true;
-  userID!:string
+  logoutURL = environment.AUTH0.logoutURL;
+  isLoggedIn = false;
+  userEmail?= "";
+  role: string = "";
+  isAdmin: boolean = false;
+
+  sub:string|undefined = "";
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private cookieService: CookieService
-  ) {
+    public auth: AuthService,
+    public api: ApiService,
+  ) { }
 
-    this.router.events.subscribe({
-      next: (ev) => {
-        if (ev instanceof NavigationEnd) {
-          this.userID = this.cookieService.get('UserID')
-          this.IsLoggedIn = this.userID ? true : false;
-        }
-      }
-    })
-  }
 
   ngOnInit(): void {
-    this.userID = this.cookieService.get('UserID')
-    this.IsLoggedIn = this.userID ? true : false;
-    this.router.navigate(['/pets'])
+    this.CheckAdmin()
+    this.auth.user$.subscribe((resp) => { this.userEmail = resp?.email })
+    this.checkLoginStatus()
   }
 
-  logout = () => {
-    this.cookieService.deleteAll()
-    this.IsLoggedIn = false;
-    this.router.navigate(['login'])
+  checkLoginStatus = () => {
+    this.auth.isAuthenticated$.subscribe(
+      (resp) => { this.isLoggedIn = resp }
+    )
+  }
+
+  CheckAdmin = () => {
+    this.api.checkRole().subscribe({
+
+      next: (resp: any) => {this.role =  resp.claim },
+      error: (err) => { console.log(err) },
+      complete: () => {
+        this.isAdmin = this.role == "write:admin" ? true : false;
+      }
+    })
   }
 }

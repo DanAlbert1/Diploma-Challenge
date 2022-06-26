@@ -1,0 +1,46 @@
+<div class="sign-up-container">
+  <h1>Create Treatment</h1>
+<form class="sign-up-box" [formGroup]="createTreatmentForm">
+  <div class="form-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Pet</mat-label>
+        <mat-select formControlName="Pet">
+          <mat-option *ngFor="let item of pets" value="{{item.petName}}"> {{isAdmin ? "ID: " + item.ownerId :null}} {{item.petName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+      <mat-label>Procedure</mat-label>
+        <mat-select formControlName="Procedure">
+          <mat-option *ngFor="let item of procedures" [value]="item">{{item.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+  <div class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Date</mat-label>
+      <input
+      formControlName="Date"
+      type="date"
+      matInput
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Notes</mat-label>
+      <input
+       formControlName="Notes"
+       type="text"
+       matInput
+      >
+    </mat-form-field>
+  </div>
+  <div class="form-container">
+    <p>Price: $ {{this.createTreatmentForm.controls['Procedure'].value.price}}</p>
+  </div>
+</form>
+  <span>{{passwordValidation.errorMessage}}</span>
+  <button mat-button (click)="createProcedure()">Create Treatment</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</div>
+
+

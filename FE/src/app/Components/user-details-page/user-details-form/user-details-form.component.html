@@ -1,0 +1,41 @@
+<div class="center">
+  <form [formGroup]="editUserForm" class="center">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+       formControlName="Email"
+       type="email"
+       placeholder="e.g john@example.com"
+       matInput
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input
+       formControlName="FirstName"
+       type="text"
+       placeholder="e.g John"
+       matInput
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input
+       formControlName="LastName"
+       type="text"
+       placeholder="e.g Smith"
+       matInput
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Phone Number</mat-label>
+      <input
+       formControlName="PhoneNumber"
+       type="text"
+       placeholder="0400011139"
+       matInput
+      >
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+  </form>
+</div>

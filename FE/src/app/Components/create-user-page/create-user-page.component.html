@@ -1,0 +1,69 @@
+<div class="create-user-container">
+  <h1>Sign Up</h1>
+<form class="sign-up-box" [formGroup]="createUserForm" (ngSubmit)="createUser()">
+  <div class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input
+      formControlName="firstName"
+        type="text"
+        matInput placeholder="e.g.John"
+        >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input
+        formControlName="lastName"
+        type="text"
+        matInput placeholder="e.g.Smith"
+        >
+    </mat-form-field>
+  </div>
+  <div class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Phone Number</mat-label>
+      <input
+      formControlName="phoneNumber"
+      type="tel"
+      matInput
+      placeholder="e.g.040001234321"
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Eamil</mat-label>
+      <input
+      autocomplete="email"
+       formControlName="email"
+       type="email"
+       matInput
+       placeholder="e.g.john@example.com"
+      >
+    </mat-form-field>
+  </div>
+  <div class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input
+      new-password
+       formControlName="password"
+       autocomplete="new-password"
+       type="password"
+       matInput
+       placeholder=""
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Confirm Password</mat-label>
+      <input
+        formControlName="confirmPassword"
+        autocomplete="new-password"
+        type="password"
+        matInput placeholder=""
+      >
+    </mat-form-field>
+  </div>
+</form>
+  <span>{{passwordValidation.errorMessage}}</span>
+  <button mat-raised-button color="primary" (click)="createUser()">Create User</button>
+</div>

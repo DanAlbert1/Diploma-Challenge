@@ -3,69 +3,88 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from './Components/login-page/login-page.component';
-import { MaterialModule } from './Modules/material/material.module';
+
+//--------- Form Builder ----------//
+import { FormBuilder, Validators, ReactiveFormsModule, FormsModule} from '@angular/forms';
+
+import { environment } from 'src/environments/environment';
+
+// Import the module from the SDK
+import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { MyPetsComponent } from './Components/my-pets/my-pets.component';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { PetsPageComponent } from './Components/pets-page/pets-page.component';
-import { PetsTableComponent } from './Components/pets-page/pets-table/pets-table.component';
-import { AddPetPopupFormComponent } from './Components/pets-page/add-pet-popup-form/add-pet-popup-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//---------- Materials Module ---------------//
+import { AppMaterialModule } from './app-material/app-material.module';
+
+//------ api modules --------//
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SignUpPageComponent } from './Components/sign-up-page/sign-up-page.component';
+import { PetsTableComponent } from './Components/my-pets/pets-table/pets-table.component';
 import { TreatmentPageComponent } from './Components/treatment-page/treatment-page.component';
-import { TreatmentFormDialogComponent } from './Components/treatment-page/treatment-form-dialog/treatment-form-dialog.component';
-import { ApiService } from './Services/api.service';
-import { AccountPageComponent } from './Components/account-page/account-page.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCardModule } from '@angular/material/card';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
+import { CreateTreatmentFormComponent } from './Components/treatment-page/create-treatment-form/create-treatment-form.component';
+import { ProcedurePageComponent } from './Components/procedure-page/procedure-page.component';
+import { UserDetailsPageComponent } from './Components/user-details-page/user-details-page.component';
+import { UserDetailsFormComponent } from './Components/user-details-page/user-details-form/user-details-form.component';
+import { SignUpFormComponent } from './Components/sign-up-page/sign-up-form/sign-up-form.component';
+import { CreateUserPageComponent } from './Components/create-user-page/create-user-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
+    MyPetsComponent,
     NavBarComponent,
-    PetsPageComponent,
+    SignUpPageComponent,
     PetsTableComponent,
-    AddPetPopupFormComponent,
     TreatmentPageComponent,
-    TreatmentFormDialogComponent,
-    AccountPageComponent,
+    CreateTreatmentFormComponent,
+    ProcedurePageComponent,
+    UserDetailsPageComponent,
+    UserDetailsFormComponent,
+    SignUpFormComponent,
+    CreateUserPageComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    HttpClientModule,
     ReactiveFormsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCardModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
+    FormsModule,
+    AppRoutingModule,
+    AppMaterialModule,
+    HttpClientModule,
+
+
+    AuthModule.forRoot({
+      domain:environment.AUTH0.domain,
+      clientId: environment.AUTH0.clientId,
+      redirectUri: environment.AUTH0.redirectUri,
+      audience: environment.AUTH0.audience,
+      scope: 'read:message write:admin',
+
+      httpInterceptor: {
+        allowedList: [
+          {
+            uri: `${environment.apiURL}/api/owner/sign-up`,
+            allowAnonymous:true
+          },
+          {
+            uri: `${environment.apiURL}/*`,
+            tokenOptions: {
+              audience: environment.AUTH0.audience,
+              scope: 'read:message write:admin',
+            }
+          }
+
+        ]
+      }
+    }),
+
+    BrowserAnimationsModule,
   ],
-  providers: [FormBuilder, CookieService, ApiService],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },FormBuilder,Validators],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

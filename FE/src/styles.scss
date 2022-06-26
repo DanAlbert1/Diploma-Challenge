@@ -1,66 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
-
+body{
+    padding: 0px;
+    margin:0px;
+}
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-.spacer-right{
-  padding-right:15px;
+h1{
+  word-wrap: break-word;
 }
 
+
 .container{
-  max-width:100vw;
-  width: auto;
+  padding: 2vw;
+  min-height: 80vh;
   overflow: auto;
 }
 
 .center{
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.center-container{
-  display: flex;
-  justify-content: center;
-}
-
-.full-width-table {
-  width: 100%;
-}
-
-.table{
-  display: flex;
-  width:80%;
-  margin:20px auto;
+  flex-direction: column;
   overflow: auto;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  flex-wrap: wrap;
-
-  .mat-cell{
-    padding:5px;
-  }
-
-  .mat-header-cell{
-    padding:5px;
-  }
-}
-
-.paginator{
-  width: 100%;
-}
-
-.form-container{
-  display: flex;
-  flex-direction: row;
+  padding-bottom: 10px;
   row-gap: 10px;
+}
+
+.center-paginator{
+  display: flex;
   justify-content: center;
   align-items: center;
-
-  .mat-form-field{
-    margin-left: 5px;
-  }
-
+  flex-direction: column;
+  overflow: auto;
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  padding-bottom: 10px;
 }

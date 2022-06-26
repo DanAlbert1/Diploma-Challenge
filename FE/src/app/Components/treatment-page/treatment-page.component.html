@@ -1,51 +1,78 @@
-<div class="mat-elevation-z8 table">
-  <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+<div class="center">
+    <h1>Treatments</h1>
+    <div class="center-paginator">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-responsive">
 
+    <!-- Treatment ID Column -->
     <ng-container matColumnDef="ID">
-      <th mat-header-cell *matHeaderCellDef >Treatment ID</th>
-      <td mat-cell *matCellDef="let row">{{row.treatmentId}}</td>
+      <th mat-header-cell *matHeaderCellDef> Treatment ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
     </ng-container>
 
-
-    <ng-container matColumnDef="PetID">
-      <th mat-header-cell *matHeaderCellDef >Pet Name</th>
-      <td mat-cell *matCellDef="let row">{{row.fkPetId}}</td>
+    <!-- Owner ID Column -->
+    <ng-container matColumnDef="Owner Id">
+      <th mat-header-cell *matHeaderCellDef> Owner ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.OwnerId}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="PetName">
-      <th mat-header-cell *matHeaderCellDef >Pet Name</th>
-      <td mat-cell *matCellDef="let row">{{row.petName}}</td>
+    <!-- Pet Name Column -->
+    <ng-container matColumnDef="Pet Name">
+      <th mat-header-cell *matHeaderCellDef>Pet Name</th>
+      <td mat-cell *matCellDef="let element"> {{element.PetName}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="ProcedureName">
-      <th mat-header-cell *matHeaderCellDef >Procedure Name</th>
-      <td mat-cell *matCellDef="let row">{{row.procedureName}}</td>
+    <!-- Procedure ID Column -->
+    <ng-container matColumnDef="Procedure ID">
+      <th mat-header-cell *matHeaderCellDef> Procedure ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.ProcedureID}} </td>
     </ng-container>
 
+    <!-- Date Column -->
     <ng-container matColumnDef="Date">
-      <th mat-header-cell *matHeaderCellDef >Date</th>
-      <td mat-cell *matCellDef="let row">{{row.date}}</td>
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.Date}} </td>
     </ng-container>
 
+    <!-- Notes Column -->
     <ng-container matColumnDef="Notes">
-      <th mat-header-cell *matHeaderCellDef >Notes</th>
-      <td mat-cell *matCellDef="let row">{{row.notes}}</td>
+      <th mat-header-cell *matHeaderCellDef> Notes </th>
+      <td mat-cell *matCellDef="let element"> {{element.Notes}} </td>
     </ng-container>
 
+    <!-- Payment Column -->
     <ng-container matColumnDef="Payment">
-      <th mat-header-cell *matHeaderCellDef >Payment</th>
-      <td mat-cell *matCellDef="let row">{{row.payment}}</td>
+      <th mat-header-cell *matHeaderCellDef> Payment </th>
+      <td mat-cell *matCellDef="let element"> $ {{element.Payment}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="AmountOwed">
-      <th mat-header-cell *matHeaderCellDef >Amount Owed</th>
-      <td mat-cell *matCellDef="let row">{{row.amountOwed}}</td>
+    <ng-container matColumnDef="Amount Owed">
+      <th mat-header-cell *matHeaderCellDef> Amount Owed </th>
+      <td mat-cell *matCellDef="let element"> $ {{element.AmountOwed}} </td>
+    </ng-container>
+
+    <ng-container *ngIf="isAdmin" matColumnDef="Paid">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"
+      style="padding-bottom:10px auto"
+      >
+        <button
+        (click)="markAsPaid(element.ID)"
+        mat-flat-button
+        color="primary"
+        >
+        Mark as Paid
+        </button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr
+    mat-row
+    *matRowDef="let row;
+    columns: displayedColumns;"></tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users" class=" mat-elevation-z8 table-responsive"></mat-paginator>
 </div>
-<div class="center-container">
-  <button (click)="openTreatmentForm()" mat-raised-button color="primary">Add Treatment</button>
+
+  <button mat-raised-button color="primary" (click)="openTreatmentForm()">Create Treatment</button>
 </div>

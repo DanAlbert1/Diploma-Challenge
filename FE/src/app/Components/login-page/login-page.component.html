@@ -1,49 +1,9 @@
-<div class="container center">
-  <h1>Login/Register</h1>
-  <mat-tab-group>
-    <mat-tab label="Login">
-      <form [formGroup]="loginForm" class="registrationForm" ng-submit="login()">
-        <mat-form-field appearance="outline">
-          <mat-label>Phone Number</mat-label>
-          <input
-          type="tel"
-          matInput placeholder="e.g 0412342556"
-          formControlName="Phone"
-          >
-        </mat-form-field>
-        <mat-error>{{this.errorMessage}}</mat-error>
-        <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="login()">Login</button>
-      </form>
-
-    </mat-tab>
-    <mat-tab label="Register">
-      <form [formGroup]="registrationForm" class="registrationForm" ng-submit="login()">
-        <mat-form-field appearance="outline">
-          <mat-label>First Name</mat-label>
-          <input
-          matInput placeholder="e.g John"
-          formControlName="FirstName"
-          >
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Last Name</mat-label>
-          <input
-          matInput placeholder="e.g Smith"
-          formControlName="SurName"
-          >
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Phone Number</mat-label>
-          <input
-          type="tel"
-          matInput placeholder="e.g 0412342556"
-          formControlName="Phone"
-          >
-        </mat-form-field>
-        <mat-error>{{this.errorMessageLogin}}</mat-error>
-        <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="login()">Register</button>
-    </form>
-    </mat-tab>
-  </mat-tab-group>
-
-</div>
+<ng-container>
+  <div class="login-page-container">
+    <div class="login-box">
+        <h1>Pets</h1>
+        <button mat-raised-button color="primary" routerLink="/sign-up">Sign Up</button>
+        <button mat-raised-button color="primary" (click)="login()">Login</button>
+    </div>
+  </div>
+</ng-container>

@@ -1,14 +1,30 @@
-.nav-button{
-  margin-right: 10px;
+// .nav{
+//   position: fixed;
+// }
 
-  transition: all ease 0.5s;
+.right{
+  margin-left: auto;
+}
+
+button{
+  margin-right: 5px;
 
   &:hover{
-    background-color:darkblue;
+    background-color: #3f51b5;
+    color: white;
   }
-
 }
 
 .active{
-  background-color: darkblue;
+  background-color: #3f51b5;
+  color: white;
+
+  transition: all 0.5s ease;
+
+  &:hover{
+    background-color: #5668ce;
+    color: white;
+  }
+
+
 }

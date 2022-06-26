@@ -1,20 +1,34 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="nav">
   <mat-toolbar-row>
-    <span>Pets App</span>
-    <span class="spacer-right"></span>
-    <ng-container *ngIf="IsLoggedIn">
-      <button class="nav-button" mat-raised-button routerLink="/pets" routerLinkActive="active" color="primary">My Pets</button>
-      <button class="nav-button" mat-raised-button routerLink="/treatment" routerLinkActive="active" color="primary">Treatments</button>
-      <button class="nav-button" mat-raised-button routerLink="/account" routerLinkActive="active" color="primary">Account</button>
-      <button
-
-      style="margin-left:auto;"
-       mat-mini-fab color="primary"
-       aria-label="Example icon button with a filter list icon"
-       (click)="logout()"
-       >
+    <span>Pet App</span>
+    <div class="right med-icon">
+       <button
+       routerLink="/user"
+      *ngIf="isLoggedIn"
+      mat-mini-fab
+      matTooltip="{{userEmail}}"
+    >
+      <mat-icon>
+        person
+      </mat-icon>
+    </button>
+    <button
+    *ngIf="isLoggedIn"
+      mat-mini-fab
+      matTooltip="Logout"
+      class="right med-icon"
+      (click)="auth.logout({returnTo:logoutURL})"
+      >
         <mat-icon>logout</mat-icon>
-      </button>
-    </ng-container>
+    </button>
+    </div>
+
   </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="isLoggedIn">
+      <button mat-raised-button routerLink="/pets" routerLinkActive="active">Pets</button>
+      <button mat-raised-button routerLink="/treatments" routerLinkActive="active">Treatment</button>
+      <button mat-raised-button routerLink="/procedures" routerLinkActive="active">Procedures</button>
+      <button *ngIf="isAdmin" mat-raised-button routerLink="/create-user" routerLinkActive="active">Create User</button>
+    </mat-toolbar-row>
 </mat-toolbar>
+

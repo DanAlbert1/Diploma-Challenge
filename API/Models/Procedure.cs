@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
 
-namespace API.Models
+namespace API.models
 {
     public class Procedure
     {
-        public Procedure()
-        {            
+        public Procedure(){
+
         }
 
-        public int Id { get; set; }
-        public int? ProcedureId { get; set; }
+        public int ProcedureID { get; set; }
+
         public string? Description { get; set; }
-        public decimal? Price { get; set; }
+
+        public Decimal Price { get; set; }       
     }
 }

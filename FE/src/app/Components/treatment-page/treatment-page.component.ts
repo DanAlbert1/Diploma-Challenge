@@ -2,10 +2,20 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '@auth0/auth0-angular';
 import { ApiService } from 'src/app/Services/api.service';
-import { TreatmentFormDialogComponent } from './treatment-form-dialog/treatment-form-dialog.component';
+import { CreateTreatmentFormComponent } from './create-treatment-form/create-treatment-form.component';
+
+export interface Treatment
+{
+    ID: number,
+    OwnerId: number,
+    PetName: string,
+    ProcedureID: number,
+    Date: any,
+    Notes: string,
+    Payment: number
+}
 
 @Component({
   selector: 'app-treatment-page',
@@ -14,34 +24,86 @@ import { TreatmentFormDialogComponent } from './treatment-form-dialog/treatment-
 })
 export class TreatmentPageComponent implements AfterViewInit {
 
-  dataSource!: any;
-  displayedColumns = ["ID", "PetID", "PetName","ProcedureName", "Date", "Notes", "Payment","AmountOwed"];
+  isAdmin: boolean = false
+  role: any = null
+  treatmentData: Treatment[] = []
+  displayedColumns: string[] = ["ID", "Owner Id", "Pet Name", "Procedure ID", "Date", "Notes", "Payment", "Amount Owed"]
 
-  userID!:number
+  dataSource: MatTableDataSource<Treatment>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private cookieService: CookieService,
-    public api:ApiService,
+    public auth: AuthService,
+    public api: ApiService,
     public dialog: MatDialog
-  ) { }
+  ) {
+    this.getTreatments();
+
+    this.dataSource = new MatTableDataSource(this.treatmentData);
+  }
+
+  openTreatmentForm() {
+    const dialogRef = this.dialog.open(CreateTreatmentFormComponent);
+    dialogRef.afterClosed().subscribe(
+      () => {
+        this.getTreatments();
+      }
+    );
+
+  }
+
+
 
   getTreatments = () => {
-    this.api.viewTreatments(this.userID).subscribe({
-      next:(resp:any) => { this.dataSource = new MatTableDataSource<any>(resp.Data), console.log(resp.Data) }
+    this.api.checkRole().subscribe({
+
+      next: (resp: any) => { this.role = resp.claim },
+
+      error: (err) => { console.log(err) },
+
+      complete: () => {
+        if (this.role == "write:admin") {
+          this.api.adminViewTreatments().subscribe({
+            next: (resp) => {
+              this.isAdmin = true;
+              this.treatmentData = resp as Treatment[]
+              this.dataSource = new MatTableDataSource(this.treatmentData);
+              this.displayedColumns =  ["ID", "Owner Id", "Pet Name", "Procedure ID", "Date", "Notes", "Payment", "Amount Owed", "Paid"]
+              this.dataSource.paginator = this.paginator;
+            },
+
+            complete: () => { }
+
+          })
+
+        } else {
+
+          this.api.viewTreatments().subscribe({
+            next: (resp) => { this.treatmentData = resp as Treatment[] },
+            complete: () => {
+              this.dataSource = new MatTableDataSource(this.treatmentData)
+              this.dataSource.paginator = this.paginator;
+            }
+        })
+
+        }
+      }
     })
   }
 
-  openTreatmentForm(){
-    const dialogRef = this.dialog.open(TreatmentFormDialogComponent);
+  markAsPaid = (treatmentID: number) => {
+    this.api.markTreatmentAsPaid(treatmentID).subscribe({
+      next: (resp) => { console.log(resp) },
+      error: (err) => { console.log(err) },
+      complete: () => {
+        this.getTreatments();
+      }
+    })
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.getTreatments();
-    });
   }
 
-  ngAfterViewInit(): void {
-    this.userID = + this.cookieService.get('UserID')
-    this.getTreatments();
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
 }
