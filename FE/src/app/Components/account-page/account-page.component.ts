@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from 'src/app/Services/api.service';
-
+//deploy
 @Component({
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
