@@ -1,0 +1,47 @@
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" [dataSource]="dataSource" aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="custId">
+      <th mat-header-cell *matHeaderCellDef>Customer Id</th>
+      <td mat-cell *matCellDef="let row">{{row.custId}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef>Full Name</th>
+      <td mat-cell *matCellDef="let row">{{row.fullName}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="segId">
+      <th mat-header-cell *matHeaderCellDef>Segment Id</th>
+      <td mat-cell *matCellDef="let row">{{row.segId}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef>Country</th>
+      <td mat-cell *matCellDef="let row">{{row.country}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef>State</th>
+      <td mat-cell *matCellDef="let row">{{row.state}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="postCode">
+      <th mat-header-cell *matHeaderCellDef>Postcode</th>
+      <td mat-cell *matCellDef="let row">{{row.postCode}}</td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="region">
+      <th mat-header-cell *matHeaderCellDef>Region</th>
+      <td mat-cell *matCellDef="let row">{{row.region}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

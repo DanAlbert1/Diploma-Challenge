@@ -15,27 +15,11 @@ export class NavBarComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private cookieService: CookieService
-  ) {
+  ) {}
 
-    this.router.events.subscribe({
-      next: (ev) => {
-        if (ev instanceof NavigationEnd) {
-          this.userID = this.cookieService.get('UserID')
-          this.IsLoggedIn = this.userID ? true : false;
-        }
-      }
-    })
-  }
+   
 
   ngOnInit(): void {
-    this.userID = this.cookieService.get('UserID')
-    this.IsLoggedIn = this.userID ? true : false;
-    this.router.navigate(['/pets'])
   }
 
-  logout = () => {
-    this.cookieService.deleteAll()
-    this.IsLoggedIn = false;
-    this.router.navigate(['login'])
-  }
 }

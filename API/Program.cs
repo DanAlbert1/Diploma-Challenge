@@ -1,4 +1,5 @@
 using API.Models;
+using API.Test;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -22,7 +23,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<DiplomaChallengeSem1Context>();
+builder.Services.AddDbContext<diplomachallengeContext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

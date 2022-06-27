@@ -11,6 +11,12 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
+
+  getCustomers = () => {
+    return this.http.get(`${environment.apiURL}/Owner/get-customers`)
+
+  }
+
   register = (owner:any) => {
     return this.http.post(`${environment.apiURL}/owner/register`,owner)
   }
