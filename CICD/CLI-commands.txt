@@ -1,4 +1,4 @@
-cd Diploma-Challenge-Sem1\CICD
+cd Diploma-Challenge\CICD
 
 The command below will create a sql server and database
 
