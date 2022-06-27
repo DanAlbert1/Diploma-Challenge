@@ -17,6 +17,79 @@ public class OwnerController : ControllerBase
         _context = context;
     }
 
+    [HttpDelete]
+    [Route("delete-order/{Id:int}")]
+    public async Task<ActionResult<OrderReq>> deleteOrder(){
+        var OrderId = Convert.ToInt32(RouteData.Values["Id"]);
+
+        var order = await _context.Orders
+        .Where(o => o.Id == OrderId)
+        .FirstOrDefaultAsync();
+        
+        _context.Orders.Remove(order!);
+
+        _context.SaveChanges();
+
+        return Ok(order);
+        
+    }
+
+
+    [HttpPut]
+    [Route("update-order/{Id:int}")]
+    public async Task<ActionResult<OrderReq>> updateOrder([FromBody] OrderReq orderReq){
+        var OrderId = Convert.ToInt32(RouteData.Values["Id"]);
+
+        var order = await _context.Orders
+        .Where(o => o.Id == OrderId)
+        .FirstOrDefaultAsync();
+
+        if(order != null){
+        order.Quantity = orderReq.Quantity;
+        order.OrderDate = orderReq.OrderDate;
+        order.ShipDate = orderReq.ShipDate;
+        order.ProductId = orderReq.ProductId;
+        order.ShipMode = orderReq.ShipMode;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(order);
+        }
+
+        return Ok(null);
+
+
+    }
+
+    [HttpGet]
+    [Route("get-order/{Id:int}")]
+    public async Task<ActionResult<Order>> getOrder(){
+
+        var OrderId = Convert.ToInt32(RouteData.Values["Id"]);
+
+        var order = await _context.Orders
+        .Where(o => o.Id == OrderId)
+        .FirstOrDefaultAsync();
+
+        return Ok(order);
+    }
+
+    [HttpGet]
+    [Route("get-products")]
+    public async Task<ActionResult<Customer>> getProducts(){
+        var products = await _context.Products.ToListAsync();
+
+        return Ok(products);
+    }
+
+    [HttpGet]
+    [Route("get-shipping")]
+    public async Task<ActionResult<Customer>> getShipping(){
+        var shippings = await _context.Shippings.ToListAsync();
+
+        return Ok(shippings);
+    }
+
     [HttpGet]
     [Route("get-customers")]
     public async Task<ActionResult<Customer>> getCustomers(){
@@ -25,40 +98,74 @@ public class OwnerController : ControllerBase
         return Ok(customers);
     }
 
+    [HttpGet]
+    [Route("get-orders/{Id:int}")]
+    public async Task<ActionResult<Order>> getOrders(){
+
+        var userId = Convert.ToInt32(RouteData.Values["Id"]);
+
+        var orders = await _context.view_orders
+        .Where(o => o.CustId == userId)
+        .ToListAsync();
+
+        return Ok(orders);
+    }
+
     [HttpPost]
-    [Route("create-customer")]
-    public async Task<ActionResult<Response<CustomerReq?>>> CreateCustomer([FromBody] CustomerReq newCustomer){
-        var isCustomer = await _context.Customers
-        .Where(c => c.CustId == newCustomer.CustId)
-        .FirstOrDefaultAsync();
+    [Route("{Id:int}/create-order")]
+    public async Task<ActionResult<Order>> createOrders([FromBody] OrderReq orderReq){
+        var userId = Convert.ToInt32(RouteData.Values["Id"]);
 
-         Response<CustomerReq?> response;
+        var order = new Order();
 
-        if(isCustomer != null){
-            response = new Response<CustomerReq?>(null,false, "Customer already exists");
-            return StatusCode(409,response);            
-        }
+        order.CustomerId = userId;
+        order.ProductId = orderReq.ProductId;
+        order.OrderDate = orderReq.OrderDate;
+        order.Quantity = orderReq.Quantity;
+        order.ShipDate = orderReq.ShipDate;
+        order.ShipMode = orderReq.ShipMode;
 
-        var customer = new Customer();
-        customer.City = newCustomer.City;
-        customer.Country = newCustomer.Country;
-        customer.CustId = newCustomer.CustId;
-        customer.FullName = newCustomer.FullName;
-        customer.SegId = newCustomer.SegId;
-        customer.State = newCustomer.State;
-        customer.PostCode = newCustomer.PostCode;
-        customer.Region = newCustomer.Region;
-
-        await _context.Customers.AddAsync(customer);
+        await _context.Orders.AddAsync(order);
         await _context.SaveChangesAsync();
 
-       response = new Response<CustomerReq?>(newCustomer,false, "Customer Created");
-
-        return Ok(response);
-
-
-
+        return Ok(order);
     }
+
+  
+    // [HttpPost]
+    // [Route("create-customer")]
+    // public async Task<ActionResult<Response<CustomerReq?>>> CreateCustomer([FromBody] CustomerReq newCustomer){
+    //     var isCustomer = await _context.Customers
+    //     .Where(c => c.CustId == newCustomer.CustId)
+    //     .FirstOrDefaultAsync();
+
+    //      Response<CustomerReq?> response;
+
+    //     if(isCustomer != null){
+    //         response = new Response<CustomerReq?>(null,false, "Customer already exists");
+    //         return StatusCode(409,response);            
+    //     }
+
+    //     var customer = new Customer();
+    //     customer.City = newCustomer.City;
+    //     customer.Country = newCustomer.Country;
+    //     customer.CustId = newCustomer.CustId;
+    //     customer.FullName = newCustomer.FullName;
+    //     customer.SegId = newCustomer.SegId;
+    //     customer.State = newCustomer.State;
+    //     customer.PostCode = newCustomer.PostCode;
+    //     customer.Region = newCustomer.Region;
+
+    //     await _context.Customers.AddAsync(customer);
+    //     await _context.SaveChangesAsync();
+
+    //    response = new Response<CustomerReq?>(newCustomer,false, "Customer Created");
+
+    //     return Ok(response);
+
+
+
+    // }
 
 
     // [HttpGet]

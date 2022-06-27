@@ -31,7 +31,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { CustomersTableComponent } from './Components/customers-table/customers-table.component';
-
+import { OrdersComponent } from './Components/orders/orders.component';
+import { OrderFormComponent } from './Components/orders/order-form/order-form.component';
+import { OrderComponent } from './Components/order/order.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,9 @@ import { CustomersTableComponent } from './Components/customers-table/customers-
     TreatmentFormDialogComponent,
     AccountPageComponent,
     CustomersTableComponent,
+    OrdersComponent,
+    OrderFormComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

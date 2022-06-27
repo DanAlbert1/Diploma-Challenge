@@ -1,4 +1,5 @@
-<div class="mat-elevation-z8">
+<div class="center-items">
+  <div class="mat-elevation-z8">
   <table mat-table class="full-width-table" [dataSource]="dataSource" aria-label="Elements">
     <!-- Id Column -->
     <ng-container matColumnDef="custId">
@@ -42,6 +43,9 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row (click)="getCustomerOrders(row.id)" *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
+
+</div>
+

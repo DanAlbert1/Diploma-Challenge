@@ -19,6 +19,7 @@ namespace API.Models
         public virtual DbSet<Treatment> TREATMENT { get; set; } = null!;
 
         public virtual DbSet<View_Treatment> View_TREATMENT { get; set; } = null!;
+        public virtual DbSet<ViewOrders> view_orders { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

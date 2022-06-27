@@ -17,6 +17,36 @@ export class ApiService {
 
   }
 
+  getOrders = (customerId:number) => {
+    return this.http.get(`${environment.apiURL}/Owner/get-orders/${customerId}`)
+  }
+
+
+  getProducts = () => {
+    return this.http.get(`${environment.apiURL}/Owner/get-products`)
+  }
+
+  getShipping = () => {
+    return this.http.get(`${environment.apiURL}/Owner/get-shipping`)
+  }
+
+  createOrder = (userID:number, orderReq:any) =>{
+    return this.http.post(`${environment.apiURL}/owner/${userID}/create-order`, orderReq)
+  }
+
+  getOrder = (orderId:number) => {
+    return this.http.get(`${environment.apiURL}/owner/get-order/${orderId}`)
+  }
+
+  updateOrder = (orderId:number, updatedOrder:any) => {
+    return this.http.put(`${environment.apiURL}/owner/update-order/${orderId}`,updatedOrder)
+  }
+
+  deleteOrder = (orderId:number) => {
+    return this.http.delete(`${environment.apiURL}/owner/delete-order/${orderId}`)
+  }
+
+
   register = (owner:any) => {
     return this.http.post(`${environment.apiURL}/owner/register`,owner)
   }

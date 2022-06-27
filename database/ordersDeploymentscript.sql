@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS [view_orders];
 DROP TABLE IF EXISTS [Order];
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Customer;
@@ -50,7 +51,6 @@ GO
 
 CREATE TABLE Product(
     Id INT IDENTITY(1,1) PRIMARY KEY,
-    CustomerId INT FOREIGN KEY REFERENCES Customer,
     ProdId NVARCHAR(300),
     CatId INT FOREIGN KEY REFERENCES Category,
     [Description] NVARCHAR(300),
@@ -58,9 +58,6 @@ CREATE TABLE Product(
 );
 
 GO
-
-
-
 
 CREATE TABLE [Order](
     Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -71,6 +68,16 @@ CREATE TABLE [Order](
     ShipDate DATETIME,
     ShipMode INT REFERENCES Shipping
 );
+
+GO
+
+CREATE VIEW view_orders 
+AS
+SELECT o.Id,c.Id AS CustId ,p.[Description], o.OrderDate, o.Quantity, o.ShipDate, s.ShipMode
+FROM Customer AS C
+INNER JOIN [Order] AS O ON C.Id = O.CustomerId
+INNER JOIN Product AS P ON P.Id = o.ProductId
+INNER JOIN Shipping AS S ON S.Id = o.ShipMode;
 
 GO
 

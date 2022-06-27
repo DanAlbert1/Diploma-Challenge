@@ -8,7 +8,6 @@ namespace API.Test
         public Customer()
         {
             Orders = new HashSet<Order>();
-            Products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -24,22 +23,5 @@ namespace API.Test
         public virtual Region? RegionNavigation { get; set; }
         public virtual Segment? Seg { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
-    }
-
-    public class CustomerReq{
-
-        public CustomerReq(){
-            
-        }
-
-        public string? CustId { get; set; }
-        public string? FullName { get; set; }
-        public int? SegId { get; set; }
-        public string? Country { get; set; }
-        public string? City { get; set; }
-        public string? State { get; set; }
-        public int? PostCode { get; set; }
-        public int? Region { get; set; }
     }
 }

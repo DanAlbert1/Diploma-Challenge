@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -24,6 +25,7 @@ namespace API.Test
         public virtual DbSet<Segment> Segments { get; set; } = null!;
         public virtual DbSet<Shipping> Shippings { get; set; } = null!;
         public virtual DbSet<ViewProcedure> ViewProcedures { get; set; } = null!;
+        public virtual DbSet<ViewOrders> view_orders { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,10 +38,12 @@ namespace API.Test
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ViewOrders>().HasNoKey();
+
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(e => e.CatId)
-                    .HasName("PK__Category__6A1C8AFAF4160C6D");
+                    .HasName("PK__Category__6A1C8AFA3FBD1CB5");
 
                 entity.ToTable("Category");
 
@@ -63,12 +67,12 @@ namespace API.Test
                 entity.HasOne(d => d.RegionNavigation)
                     .WithMany(p => p.Customers)
                     .HasForeignKey(d => d.Region)
-                    .HasConstraintName("FK__Customer__Region__4589517F");
+                    .HasConstraintName("FK__Customer__Region__7FB5F314");
 
                 entity.HasOne(d => d.Seg)
                     .WithMany(p => p.Customers)
                     .HasForeignKey(d => d.SegId)
-                    .HasConstraintName("FK__Customer__SegId__44952D46");
+                    .HasConstraintName("FK__Customer__SegId__7EC1CEDB");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -82,17 +86,17 @@ namespace API.Test
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Order__CustomerI__4C364F0E");
+                    .HasConstraintName("FK__Order__CustomerI__056ECC6A");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Order__ProductId__4D2A7347");
+                    .HasConstraintName("FK__Order__ProductId__0662F0A3");
 
                 entity.HasOne(d => d.ShipModeNavigation)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ShipMode)
-                    .HasConstraintName("FK__Order__ShipMode__4E1E9780");
+                    .HasConstraintName("FK__Order__ShipMode__075714DC");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -108,12 +112,7 @@ namespace API.Test
                 entity.HasOne(d => d.Cat)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CatId)
-                    .HasConstraintName("FK__Product__CatId__4959E263");
-
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Product__Custome__4865BE2A");
+                    .HasConstraintName("FK__Product__CatId__02925FBF");
             });
 
             modelBuilder.Entity<Region>(entity =>

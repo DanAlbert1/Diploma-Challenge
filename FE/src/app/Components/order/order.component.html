@@ -1,0 +1,31 @@
+<form [formGroup]="orderForm" novalidate class="center">
+    <mat-form-field appearance="fill">
+      <mat-label>Quantity</mat-label>
+      <input type="number" formControlName="quantity" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Order Date</mat-label>
+      <input type="date" formControlName="orderDate" matInput>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Shipping Date</mat-label>
+      <input type="date" formControlName="shippingDate" matInput>
+    </mat-form-field>
+  
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Product</mat-label>
+          <mat-select formControlName="productId">
+            <mat-option *ngFor="let item of products" value="{{item.id}}">{{item.description}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Shipping Method</mat-label>
+          <mat-select formControlName="shipMode">
+            <mat-option *ngFor="let item of shipping" value="{{item.id}}">{{item.shipMode}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button style="margin-bottom: 10px;" mat-raised-button (click)="onSubmit()" color="primary" type="submit">Edit</button>
+        <button mat-raised-button (click)="deleteOrder()" color="error" type="submit">Delete</button>      
+  </form>

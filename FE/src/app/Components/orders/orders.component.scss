@@ -1,0 +1,21 @@
+.mat-cell{
+    padding:5px;
+}
+
+.mat-row{
+    &:hover{
+        cursor: pointer;
+        background-color: lightblue;
+    }
+}
+
+.mat-header-cell{
+    padding:5px;
+}
+
+.center{
+    row-gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

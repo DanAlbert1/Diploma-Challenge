@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class CustomersTableComponent implements OnInit {
 
   constructor(
     public api:ApiService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public router:Router,
   ) {
   }
 
@@ -26,5 +28,10 @@ export class CustomersTableComponent implements OnInit {
     this.api.getCustomers().subscribe({
       next:(resp:any) => {this.dataSource = new MatTableDataSource<any>(resp)}
     })
+  }
+
+  getCustomerOrders = (event:Event) => {
+    this.router.navigate(['/customer', event]);
+    console.log(event)
   }
 }
